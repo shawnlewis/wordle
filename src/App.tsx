@@ -14,7 +14,8 @@ import {
 
 function App() {
   const [guesses, setGuesses] = useState<string[]>(
-    loadGameStateFromLocalStorage()?.guesses || []
+    // loadGameStateFromLocalStorage()?.guesses || []
+    []
   );
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
