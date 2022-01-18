@@ -2,11 +2,13 @@ const gameStateKey = "gameState";
 
 type StoredGameState = {
   guesses: string[];
+  name: string;
 };
 
-export const saveGameStateToLocalStorage = (guesses: string[]) => {
+export const saveGameStateToLocalStorage = (guesses: string[], name: string) => {
   const gameState = {
     guesses,
+    name,
   };
   localStorage.setItem(gameStateKey, JSON.stringify(gameState));
 };

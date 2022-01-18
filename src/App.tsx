@@ -6,6 +6,7 @@ import { Keyboard } from "./components/keyboard/Keyboard";
 import { AboutModal } from "./components/modals/AboutModal";
 import { InfoModal } from "./components/modals/InfoModal";
 import { WinModal } from "./components/modals/WinModal";
+import { HelloModal } from "./components/modals/HelloModal";
 import { isWordInWordList, isWinningWord, solution } from "./lib/words";
 import {
   loadGameStateFromLocalStorage,
@@ -17,6 +18,9 @@ function App() {
     // loadGameStateFromLocalStorage()?.guesses || []
     []
   );
+  const [name, setName] = useState<string>(
+    loadGameStateFromLocalStorage()?.name || ''
+  )
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
@@ -27,7 +31,7 @@ function App() {
   const [shareComplete, setShareComplete] = useState(false);
 
   useEffect(() => {
-    saveGameStateToLocalStorage(guesses);
+    saveGameStateToLocalStorage(guesses, name);
   }, [guesses]);
 
   useEffect(() => {
@@ -99,7 +103,15 @@ function App() {
         onEnter={onEnter}
         guesses={guesses}
       />
+      <HelloModal
+        isOpen={name === ''}
+        handleClose={(name) => {
+          setName(name)
+          saveGameStateToLocalStorage(guesses, name)
+        }}
+      />
       <WinModal
+        name={name}
         isOpen={isWinModalOpen}
         handleClose={() => setIsWinModalOpen(false)}
         guesses={guesses}
