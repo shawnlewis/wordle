@@ -30,6 +30,8 @@ function App() {
   const [isGameLost, setIsGameLost] = useState(false);
   const [shareComplete, setShareComplete] = useState(false);
 
+  const isHelloModalOpen = name === '';
+
   useEffect(() => {
     saveGameStateToLocalStorage(guesses, name);
   }, [guesses]);
@@ -41,7 +43,7 @@ function App() {
   }, [isGameWon]);
 
   const onChar = (value: string) => {
-    if (currentGuess.length < 5 && guesses.length < 6) {
+    if (!isHelloModalOpen && currentGuess.length < 5 && guesses.length < 6) {
       setCurrentGuess(`${currentGuess}${value}`);
     }
   };
@@ -104,7 +106,7 @@ function App() {
         guesses={guesses}
       />
       <HelloModal
-        isOpen={name === ''}
+        isOpen={isHelloModalOpen}
         handleClose={(name) => {
           setName(name)
           saveGameStateToLocalStorage(guesses, name)
