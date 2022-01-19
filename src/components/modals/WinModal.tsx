@@ -78,7 +78,7 @@ export const WinModal = ({
                   <div className="mt-2">
                     <MiniGrid solution={wordOfDay.solution} guesses={guesses} />
                     <p className="text-sm text-gray-500">
-                      I love you {name} 💜💜
+                      You're the best {name} 💜💜
                     </p>
                   </div>
                 </div>
