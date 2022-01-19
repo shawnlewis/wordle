@@ -28,7 +28,7 @@ export const getWordOfDay = (random: boolean) => {
     index = Math.floor((now - epochMs) / msInDay);
   }
 
-  console.log("WORD", W[index].toUpperCase());
+  // console.log("WORD", W[index].toUpperCase());
 
   return {
     solution: W[index].toUpperCase(),
