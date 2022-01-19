@@ -1,4 +1,4 @@
-export const WORDS = [
+export const WORDS6 = [
   "search",
   "online",
   "people",
