@@ -18,7 +18,7 @@ const loadedState = loadGameStateFromLocalStorage()
 
 function App() {
   const randomMode = window.location.pathname === '/random'
-  const [wordOfDay, setWordOfDay] = useState(() => getWordOfDay(randomMode));
+  const [wordOfDay, _] = useState(() => getWordOfDay(randomMode));
   const [guesses, setGuesses] = useState<string[]>(() =>
     wordOfDay.solution === loadedState?.solution ? loadedState.guesses : []
   );
@@ -26,7 +26,7 @@ function App() {
     loadedState?.name || ''
   )
   const [currentGuess, setCurrentGuess] = useState("");
-  const [isGameWon, setIsGameWon] = useState(false);
+  const [isGameWon, setIsGameWon] = useState(() => wordOfDay.solution === guesses[guesses.length-1]);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
