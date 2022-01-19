@@ -1,6 +1,6 @@
 words_file = open('count_1w.txt')
 
-valid = set((s.strip() for s in open('wordlist.txt').read().split('\n')))
+valid = set((s.strip() for s in open('words.txt').read().split('\n')))
 
 print("export const WORDS = [")
 count = 0
