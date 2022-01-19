@@ -70,7 +70,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
                       >
                         here
                       </a>{" "}
-                      which was forked from{" "}
+                      which is a lightly modified version of{" "}
                       <a
                         href="https://github.com/hannahcode/wordle"
                         className="underline font-bold"
