@@ -4,14 +4,15 @@ import { Key } from "./Key";
 import {useEffect} from "react";
 
 type Props = {
+  solution: string;
   onChar: (value: string) => void;
   onDelete: () => void;
   onEnter: () => void;
   guesses: string[];
 };
 
-export const Keyboard = ({ onChar, onDelete, onEnter, guesses }: Props) => {
-  const charStatuses = getStatuses(guesses);
+export const Keyboard = ({ solution, onChar, onDelete, onEnter, guesses }: Props) => {
+  const charStatuses = getStatuses(solution, guesses);
 
   const onClick = (value: KeyValue) => {
     if (value === "ENTER") {

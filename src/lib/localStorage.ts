@@ -1,12 +1,16 @@
+import { StringifyOptions } from "querystring";
+
 const gameStateKey = "gameState";
 
 type StoredGameState = {
+  solution: StringifyOptions;
   guesses: string[];
   name: string;
 };
 
-export const saveGameStateToLocalStorage = (guesses: string[], name: string) => {
+export const saveGameStateToLocalStorage = (solution: string, guesses: string[], name: string) => {
   const gameState = {
+    solution,
     guesses,
     name,
   };
