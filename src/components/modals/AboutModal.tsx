@@ -45,29 +45,38 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
           >
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
               <div>
-                <div className="text-center">
+                <div>
                   <Dialog.Title
                     as="h3"
-                    className="text-lg leading-6 font-medium text-gray-900"
+                    className="text-lg leading-6 font-medium text-gray-900 text-center"
                   >
                     About
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      This is an open source clone of the game Wordle -{" "}
-                      <a
-                        href="https://github.com/hannahcode/wordle"
-                        className="underline font-bold"
-                      >
-                        check out the code here
-                      </a>{" "}
-                      and{" "}
+                      This is an open source clone of the game {' '}
                       <a
                         href="https://www.powerlanguage.co.uk/wordle/"
                         className="underline font-bold"
                       >
-                        play the original here
-                      </a>
+                      Wordle
+                      </a>.
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Check out the code{" "}
+                      <a
+                        href="https://github.com/shawnlewis/wordle"
+                        className="underline font-bold"
+                      >
+                        here
+                      </a>{" "}
+                      which was forked from{" "}
+                      <a
+                        href="https://github.com/hannahcode/wordle"
+                        className="underline font-bold"
+                      >
+                        this repo
+                      </a>.
                     </p>
                   </div>
                 </div>
