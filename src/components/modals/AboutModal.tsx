@@ -60,7 +60,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
                         className="underline font-bold"
                       >
                       Wordle
-                      </a>.
+                      </a>, but where the solution is a 6-letter word instead of the original's 5 letters.
                     </p>
                     <p className="text-sm text-gray-500">
                       Check out the code{" "}
