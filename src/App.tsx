@@ -12,6 +12,7 @@ import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from "./lib/localStorage";
+import {LETTERS_PER_WORD, MAX_GUESSES} from './lib/settings'
 
 function App() {
   const [guesses, setGuesses] = useState<string[]>(
@@ -43,7 +44,7 @@ function App() {
   }, [isGameWon]);
 
   const onChar = (value: string) => {
-    if (!isHelloModalOpen && currentGuess.length < 5 && guesses.length < 6) {
+    if (!isHelloModalOpen && currentGuess.length < LETTERS_PER_WORD && guesses.length < MAX_GUESSES) {
       setCurrentGuess(`${currentGuess}${value}`);
     }
   };
@@ -62,7 +63,7 @@ function App() {
 
     const winningWord = isWinningWord(currentGuess);
 
-    if (currentGuess.length === 5 && guesses.length < 6 && !isGameWon) {
+    if (currentGuess.length === LETTERS_PER_WORD && guesses.length < MAX_GUESSES && !isGameWon) {
       setGuesses([...guesses, currentGuess]);
       setCurrentGuess("");
 
@@ -70,7 +71,7 @@ function App() {
         return setIsGameWon(true);
       }
 
-      if (guesses.length === 5) {
+      if (guesses.length === MAX_GUESSES - 1) {
         setIsGameLost(true);
         return setTimeout(() => {
           setIsGameLost(false);

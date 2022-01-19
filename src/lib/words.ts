@@ -1,10 +1,16 @@
+import { LETTERS_PER_WORD } from './settings'
 import { WORDS } from "../constants/wordlist";
+import { WORDS6 } from "../constants/wordlist6";
 import { VALIDGUESSES } from "../constants/validGuesses";
+import { VALIDGUESSES6 } from "../constants/validGuesses6";
+
+const W = LETTERS_PER_WORD === 5 ? WORDS : WORDS6;
+const VG = LETTERS_PER_WORD === 5 ? VALIDGUESSES : VALIDGUESSES6;
 
 export const isWordInWordList = (word: string) => {
   return (
-    WORDS.includes(word.toLowerCase()) ||
-    VALIDGUESSES.includes(word.toLowerCase())
+    W.includes(word.toLowerCase()) ||
+    VG.includes(word.toLowerCase())
   );
 };
 
@@ -19,11 +25,11 @@ export const getWordOfDay = () => {
   //const msInDay = 86400000;
   //const index = Math.floor((now - epochMs) / msInDay);
 
-  const index = Math.floor(Math.random() * WORDS.length);
-  console.log("WORD", WORDS[index].toUpperCase());
+  const index = Math.floor(Math.random() * W.length);
+  console.log("WORD", W[index].toUpperCase());
 
   return {
-    solution: WORDS[index].toUpperCase(),
+    solution: W[index].toUpperCase(),
     solutionIndex: index,
   };
 };
