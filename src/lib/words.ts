@@ -1,39 +1,65 @@
-import { LETTERS_PER_WORD } from './settings'
 import { WORDS } from "../constants/wordlist";
 import { WORDS6 } from "../constants/wordlist6";
 import { VALIDGUESSES } from "../constants/validGuesses";
 import { VALIDGUESSES6 } from "../constants/validGuesses6";
 
-const W = LETTERS_PER_WORD === 5 ? WORDS : WORDS6;
-const VG = LETTERS_PER_WORD === 5 ? VALIDGUESSES : VALIDGUESSES6;
+interface Game {
+  targetList: string[];
+  validGuesses: string[];
+  lettersPerWord: number;
+  maxGuesses: number;
+  solution: string;
+  solutionIndex: number;
+}
 
-export const isWordInWordList = (word: string) => {
+export const isWordInWordList = (game: Game, word: string) => {
   return (
-    W.includes(word.toLowerCase()) ||
-    VG.includes(word.toLowerCase())
+    game.targetList.includes(word.toLowerCase()) ||
+    game.validGuesses.includes(word.toLowerCase())
   );
 };
 
-export const isWinningWord = (solution: string, word: string) => {
-  return solution === word;
+export const isWinningWord = (game: Game, word: string) => {
+  return game.solution === word;
 };
 
-export const getWordOfDay = (random: boolean) => {
-  // January 1, 2022 Game Epoch
-  let index = Math.floor(Math.random() * W.length);
-  if (!random) {
-    const epochMs = 1641013200000;
-    const now = Date.now();
-    const msInDay = 86400000;
-    index = Math.floor((now - epochMs) / msInDay);
+const getWordLists = (lettersPerWord: number) => {
+  if (lettersPerWord === 5) {
+    return {
+      targetList: WORDS,
+      validGuesses: VALIDGUESSES
+    }
+  } else if (lettersPerWord === 6) {
+    return {
+      targetList: WORDS6,
+      validGuesses: VALIDGUESSES6
+    }
   }
+  throw new Error('invalid')
+}
 
-  // console.log("WORD", W[index].toUpperCase());
-
+export const makeRandomGame = (lettersPerWord: number, maxGuesses: number): Game => {
+  const lists = getWordLists(lettersPerWord);
+  const index = Math.floor(Math.random() * lists.targetList.length);
   return {
-    solution: W[index].toUpperCase(),
-    solutionIndex: index,
-  };
-};
-
-// export const { solution, solutionIndex } = getWordOfDay(random);
+    ...lists,
+    lettersPerWord,
+    maxGuesses,
+    solution: lists.targetList[index].toUpperCase(),
+    solutionIndex: index
+  }
+}
+export const makeWordOfDayGame = (lettersPerWord: number, maxGuesses: number): Game => {
+  const lists = getWordLists(lettersPerWord);
+  const epochMs = 1641013200000;
+  const now = Date.now();
+  const msInDay = 86400000;
+  const index = Math.floor((now - epochMs) / msInDay);
+  return {
+    ...lists,
+    lettersPerWord,
+    maxGuesses,
+    solution: lists.targetList[index].toUpperCase(),
+    solutionIndex: index
+  }
+}

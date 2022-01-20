@@ -1,13 +1,13 @@
 import { Cell } from "./Cell";
-import {LETTERS_PER_WORD} from '../../lib/settings'
 
 type Props = {
+  lettersPerWord: number;
   guess: string;
 };
 
-export const CurrentRow = ({ guess }: Props) => {
+export const CurrentRow = ({ lettersPerWord, guess }: Props) => {
   const splitGuess = guess.split("");
-  const emptyCells = Array.from(Array(LETTERS_PER_WORD - splitGuess.length));
+  const emptyCells = Array.from(Array(lettersPerWord - splitGuess.length));
 
   return (
     <div className="flex justify-center mb-1">

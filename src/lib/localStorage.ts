@@ -1,9 +1,7 @@
-import { StringifyOptions } from "querystring";
-
 const gameStateKey = "gameState";
 
 type StoredGameState = {
-  solution: StringifyOptions;
+  solution: string;
   guesses: string[];
   name: string;
 };

@@ -7,26 +7,34 @@ import { AboutModal } from "./components/modals/AboutModal";
 import { InfoModal } from "./components/modals/InfoModal";
 import { WinModal } from "./components/modals/WinModal";
 import { HelloModal } from "./components/modals/HelloModal";
-import { getWordOfDay, isWordInWordList, isWinningWord } from "./lib/words";
+import { makeWordOfDayGame, makeRandomGame, isWordInWordList, isWinningWord } from "./lib/words";
 import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from "./lib/localStorage";
-import {LETTERS_PER_WORD, MAX_GUESSES} from './lib/settings'
 
 const loadedState = loadGameStateFromLocalStorage()
 
 function App() {
-  const randomMode = window.location.pathname === '/random'
-  const [wordOfDay, _] = useState(() => getWordOfDay(randomMode));
+  const mode =
+      window.location.pathname === '/random' ? 'random6' : 
+      window.location.pathname === '/random5' ? 'random5' :
+          'daily6';
+  const [game, _] = useState(() =>
+      mode === 'daily6' ? makeWordOfDayGame(6, 6) :
+      mode === 'random6' ? makeRandomGame(6, 6) :
+          makeRandomGame(5, 6)
+      );
   const [guesses, setGuesses] = useState<string[]>(() =>
-    wordOfDay.solution === loadedState?.solution ? loadedState.guesses : []
+    (mode === 'daily6' && game.solution === loadedState?.solution)
+      ? loadedState?.guesses ?? []
+      : []
   );
   const [name, setName] = useState<string>(
     loadedState?.name || ''
   )
   const [currentGuess, setCurrentGuess] = useState("");
-  const [isGameWon, setIsGameWon] = useState(() => wordOfDay.solution === guesses[guesses.length-1]);
+  const [isGameWon, setIsGameWon] = useState(() => game.solution === guesses[guesses.length-1]);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
@@ -37,7 +45,10 @@ function App() {
   const isHelloModalOpen = name === '';
 
   useEffect(() => {
-    saveGameStateToLocalStorage(wordOfDay.solution, guesses, name);
+    // only overwrite solution and guesses if we're doing daily6
+    const saveSolution = mode === 'daily6' ? game.solution : loadedState?.solution ?? '';
+    const saveGuesses = mode === 'daily6' ? guesses : loadedState?.guesses ?? [];
+    saveGameStateToLocalStorage(saveSolution, saveGuesses, name);
   }, [guesses]);
 
   useEffect(() => {
@@ -47,7 +58,7 @@ function App() {
   }, [isGameWon]);
 
   const onChar = (value: string) => {
-    if (!isHelloModalOpen && currentGuess.length < LETTERS_PER_WORD && guesses.length < MAX_GUESSES) {
+    if (!isHelloModalOpen && currentGuess.length < game.lettersPerWord && guesses.length < game.maxGuesses) {
       setCurrentGuess(`${currentGuess}${value}`);
     }
   };
@@ -57,16 +68,16 @@ function App() {
   };
 
   const onEnter = () => {
-    if (!isWordInWordList(currentGuess)) {
+    if (!isWordInWordList(game, currentGuess)) {
       setIsWordNotFoundAlertOpen(true);
       return setTimeout(() => {
         setIsWordNotFoundAlertOpen(false);
       }, 2000);
     }
 
-    const winningWord = isWinningWord(wordOfDay.solution, currentGuess);
+    const winningWord = isWinningWord(game, currentGuess);
 
-    if (currentGuess.length === LETTERS_PER_WORD && guesses.length < MAX_GUESSES && !isGameWon) {
+    if (currentGuess.length === game.lettersPerWord && guesses.length < game.maxGuesses && !isGameWon) {
       setGuesses([...guesses, currentGuess]);
       setCurrentGuess("");
 
@@ -74,7 +85,7 @@ function App() {
         return setIsGameWon(true);
       }
 
-      if (guesses.length === MAX_GUESSES - 1) {
+      if (guesses.length === game.maxGuesses - 1) {
         setIsGameLost(true);
         return setTimeout(() => {
           setIsGameLost(false);
@@ -87,7 +98,7 @@ function App() {
     <div className="py-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
       <Alert message="Word not found" isOpen={isWordNotFoundAlertOpen} />
       <Alert
-        message={`You lost, the word was ${wordOfDay.solution}`}
+        message={`You lost, the word was ${game.solution}`}
         isOpen={isGameLost}
       />
       <Alert
@@ -102,9 +113,9 @@ function App() {
           onClick={() => setIsInfoModalOpen(true)}
         />
       </div>
-      <Grid solution={wordOfDay.solution} guesses={guesses} currentGuess={currentGuess} />
+      <Grid lettersPerWord={game.lettersPerWord} maxGuesses={game.maxGuesses} solution={game.solution} guesses={guesses} currentGuess={currentGuess} />
       <Keyboard
-        solution={wordOfDay.solution}
+        solution={game.solution}
         onChar={onChar}
         onDelete={onDelete}
         onEnter={onEnter}
@@ -114,11 +125,11 @@ function App() {
         isOpen={isHelloModalOpen}
         handleClose={(name) => {
           setName(name)
-          saveGameStateToLocalStorage(wordOfDay.solution, guesses, name)
+          saveGameStateToLocalStorage(game.solution, guesses, name)
         }}
       />
       <WinModal
-        wordOfDay={wordOfDay}
+        wordOfDay={game}
         name={name}
         isOpen={isWinModalOpen}
         handleClose={() => setIsWinModalOpen(false)}

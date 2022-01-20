@@ -1,8 +1,11 @@
 import { Cell } from "./Cell";
-import {LETTERS_PER_WORD} from '../../lib/settings'
 
-export const EmptyRow = () => {
-  const emptyCells = Array.from(Array(LETTERS_PER_WORD));
+type Props = {
+  lettersPerWord: number;
+};
+
+export const EmptyRow = ({lettersPerWord}: Props) => {
+  const emptyCells = Array.from(Array(lettersPerWord));
 
   return (
     <div className="flex justify-center mb-1">
