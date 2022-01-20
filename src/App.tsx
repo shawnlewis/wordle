@@ -17,9 +17,10 @@ const loadedState = loadGameStateFromLocalStorage()
 
 function App() {
   const mode =
-      window.location.pathname === '/random' ? 'random6' : 
+      (window.location.pathname === '/random' || window.location.pathname === '/random6') ? 'random6' : 
       window.location.pathname === '/random5' ? 'random5' :
           'daily6';
+  console.log('MODE', mode)
   const [game, _] = useState(() =>
       mode === 'daily6' ? makeWordOfDayGame(6, 6) :
       mode === 'random6' ? makeRandomGame(6, 6) :
