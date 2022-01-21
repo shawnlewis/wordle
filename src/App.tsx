@@ -120,9 +120,9 @@ function App() {
             }
             setMode(e.target.value)
           }}>
-            <option value="daily6">Wordle 6 daily</option>
-            <option value="random6">Wordle 6 random</option>
-            <option value="random5">Wordle 5 random</option>
+            <option value="daily6">Wordle 6 Daily</option>
+            <option value="random6">Wordle 6 Random</option>
+            <option value="random5">Wordle 5 Random</option>
           </select>
           </h1>
         <InformationCircleIcon
