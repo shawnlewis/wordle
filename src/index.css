@@ -3,10 +3,9 @@
 @tailwind utilities;
 
 
-html {
+html, body {
     background-color: white;
-}
-
-body {
-    background-color: white;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
 }
