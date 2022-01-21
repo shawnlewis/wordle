@@ -21,12 +21,12 @@ function App() {
       window.location.pathname === '/random5' ? 'random5' :
           'daily6'
   )
-  console.log('MODE', mode)
   const [game, _] = useState(() =>
       mode === 'daily6' ? makeWordOfDayGame(6, 6) :
       mode === 'random6' ? makeRandomGame(6, 6) :
           makeRandomGame(5, 6)
       );
+  // console.log('GAME', game)
   const [guesses, setGuesses] = useState<string[]>(() =>
     (mode === 'daily6' && game.solution === loadedState?.solution)
       ? loadedState?.guesses ?? []
@@ -151,12 +151,14 @@ function App() {
         isOpen={isWinModalOpen}
         handleClose={() => setIsWinModalOpen(false)}
         guesses={guesses}
-        handleShare={() => {
+        handleShare={(usedClipboardMethod) => {
           setIsWinModalOpen(false);
-          setShareComplete(true);
-          return setTimeout(() => {
-            setShareComplete(false);
-          }, 2000);
+          if (usedClipboardMethod) {
+            setShareComplete(true);
+            return setTimeout(() => {
+              setShareComplete(false);
+            }, 2000);
+          }
         }}
       />
       <InfoModal

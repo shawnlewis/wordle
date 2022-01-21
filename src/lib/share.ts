@@ -1,14 +1,23 @@
 import { getGuessStatuses } from "./statuses";
 
 export const shareStatus = (solution: string, solutionIndex: number, guesses: string[]) => {
-  navigator.clipboard.writeText(
-    "wordle6.com " +
-      solutionIndex +
-      " " +
-      guesses.length +
-      "/6\n\n" +
-      generateEmojiGrid(solution, guesses)
-  );
+  const message = 
+      "wordle6.com " +
+        solutionIndex +
+        " " +
+        guesses.length +
+        "/6\n\n" +
+        generateEmojiGrid(solution, guesses);
+  if (navigator.share != null) {
+    navigator.share({
+      title: 'wordle6 game',
+      text: message
+    });
+    return false;
+  } else {
+    navigator.clipboard.writeText(message);
+    return true;
+  }
 };
 
 export const generateEmojiGrid = (solution: string, guesses: string[]) => {
