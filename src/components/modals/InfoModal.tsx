@@ -94,6 +94,40 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
                     </p>
                   </div>
                 </div>
+                  <Dialog.Title
+                    as="h3"
+                    className="text-center text-lg leading-6 font-medium text-gray-900"
+                    style={{marginTop: 24}}
+                  >
+                    Background
+                  </Dialog.Title>
+                  <div className="mt-2" style={{marginTop: 16}}>
+                    <p className="text-sm text-gray-500">
+                      This is an open source clone of the game {' '}
+                      <a
+                        href="https://www.powerlanguage.co.uk/wordle/"
+                        className="underline font-bold"
+                      >
+                      Wordle
+                      </a>, in which the solution is a 6-letter word instead of the original's 5 letters.
+                    </p>
+                    <p className="text-sm text-gray-500" style={{marginTop: 8}}>
+                      Check out the code{" "}
+                      <a
+                        href="https://github.com/shawnlewis/wordle"
+                        className="underline font-bold"
+                      >
+                        here
+                      </a>{" "}
+                      which is a lightly modified version of{" "}
+                      <a
+                        href="https://github.com/hannahcode/wordle"
+                        className="underline font-bold"
+                      >
+                        this repo
+                      </a>.
+                    </p>
+                  </div>
               </div>
             </div>
           </Transition.Child>

@@ -97,7 +97,7 @@ function App() {
   };
 
   return (
-    <div className="py-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div className="py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
       <Alert message="Word not found" isOpen={isWordNotFoundAlertOpen} />
       <Alert
         message={`You lost, the word was ${game.solution}`}
@@ -108,7 +108,7 @@ function App() {
         isOpen={shareComplete}
         variant="success"
       />
-      <div className="flex w-80 mx-auto items-center mb-8">
+      <div className="flex w-80 mx-auto items-center mb-4">
         <h1 className="text-xl grow font-bold">
           <select value={mode} onChange={(e) => {
             if (e.target.value === 'daily6') {
@@ -170,13 +170,13 @@ function App() {
         handleClose={() => setIsAboutModalOpen(false)}
       />
 
-      <button
+      {/* <button
         type="button"
         className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         onClick={() => setIsAboutModalOpen(true)}
       >
         About this game
-      </button>
+      </button> */}
     </div>
   );
 }
