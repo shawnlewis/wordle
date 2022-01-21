@@ -16,10 +16,11 @@ import {
 const loadedState = loadGameStateFromLocalStorage()
 
 function App() {
-  const mode =
+  const [mode, setMode] = useState(
       (window.location.pathname === '/random' || window.location.pathname === '/random6') ? 'random6' : 
       window.location.pathname === '/random5' ? 'random5' :
-          'daily6';
+          'daily6'
+  )
   console.log('MODE', mode)
   const [game, _] = useState(() =>
       mode === 'daily6' ? makeWordOfDayGame(6, 6) :
@@ -108,7 +109,22 @@ function App() {
         variant="success"
       />
       <div className="flex w-80 mx-auto items-center mb-8">
-        <h1 className="text-xl grow font-bold">Wordle 6</h1>
+        <h1 className="text-xl grow font-bold">
+          <select value={mode} onChange={(e) => {
+            if (e.target.value === 'daily6') {
+              window.location.pathname = '/';
+            } else if (e.target.value === 'random6') {
+              window.location.pathname = '/random6';
+            } else if (e.target.value === 'random5') {
+              window.location.pathname = '/random5';
+            }
+            setMode(e.target.value)
+          }}>
+            <option value="daily6">Wordle 6 daily</option>
+            <option value="random6">Wordle 6 random</option>
+            <option value="random5">Wordle 5 random</option>
+          </select>
+          </h1>
         <InformationCircleIcon
           className="h-6 w-6 cursor-pointer"
           onClick={() => setIsInfoModalOpen(true)}
