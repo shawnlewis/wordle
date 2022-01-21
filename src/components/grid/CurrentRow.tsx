@@ -15,7 +15,7 @@ export const CurrentRow = ({ lettersPerWord, guess }: Props) => {
         <Cell key={i} value={letter} />
       ))}
       {emptyCells.map((_, i) => (
-        <Cell key={i} />
+        <Cell key={100 + i} />
       ))}
     </div>
   );
