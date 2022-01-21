@@ -44,7 +44,7 @@ export const Keyboard = ({ solution, onChar, onDelete, onEnter, guesses }: Props
   }, [onEnter, onDelete, onChar]);
 
   return (
-    <div>
+    <div style={{userSelect: 'none'}}>
       <div className="flex justify-center mb-1">
         <Key value="Q" onClick={onClick} status={charStatuses["Q"]} />
         <Key value="W" onClick={onClick} status={charStatuses["W"]} />
